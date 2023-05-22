@@ -1,0 +1,58 @@
+{% extends "swift/layout/user_base.html" %} {% load static %} {% block body_block %}
+<div class="content-inner full-screen">
+    <div class="page-block">
+        <input type="hidden" value="{% url 'appswift:subject' %}" id="load_subject">
+        <div class="d-flex justify-content-between">
+            <h1 class="page-block-title">Curriculum</h1>
+            <div>
+                <a class="add-subject" id="create_subject" data-fancybox="" data-src="#subject-popup"  data-url="{% url 'appswift:create_subject'%}">
+                    <button>+</button>
+                </a>
+            </div>
+        </div>
+
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sl.NO</th>
+                        <th>Name</th>
+                        <th>Course</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="subject-tbody">
+                    {% include 'swift/subject/subject_list.html' %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pagination-outer align-items-center justify-content-between d-flex" id="subject-pagination">
+        {% include 'swift/subject/pagination.html' %}
+    </div>
+
+    <div>
+        <!-- Subject Add form starts-->
+        <div class="add-subject" id="subject-popup" style="display:none;">
+            <div class="pop-body" id="subject-div">
+                <div class="formbg-inner">
+                    <form method="post" action="" class="SubjectForm" id="SubjectForm" name="SubjectForm">
+                        {% csrf_token %}
+                        <h2 class="padding-bottom--15" id="popup_head">Add Subject</h2>
+                        <div class="subject-form" id="subject-form-div">
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- subject Add form ends -->
+    </div>
+</div>
+</div>
+{% endblock body_block %} 
+{% block page_script %}
+<script src="{% static '/swift/assets/js/subject.js' %}?v={% now 'd_m_yH:i:s'%}"></script>
+{% endblock page_script %}
