@@ -4,6 +4,19 @@
         <input type="hidden" value="{% url 'appswift:subject' %}" id="load_subject">
         <div class="d-flex justify-content-between">
             <h1 class="page-block-title">Subject</h1>
+
+{% comment %} #search {% endcomment %}
+
+<form id="search-form">
+    <input type="text" id="search-input" placeholder="Search">
+    <button type="submit">Search</button>
+</form>
+
+<div id="results-container"></div>
+
+    {% comment %} end {% endcomment %}
+
+
             <div>
                 <a class="add-subject" id="create_subject" data-fancybox="" data-src="#subject-popup"  data-url="{% url 'appswift:create_subject'%}">
                     <button>+</button>

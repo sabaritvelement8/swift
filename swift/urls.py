@@ -2,6 +2,7 @@ from django.urls import path
 from swift.views.account import *
 from swift.views.curriculum import *
 from swift.views.subjects import *
+from swift.views.course import *
 
 app_name = "appswift"
 # views
@@ -26,5 +27,16 @@ urlpatterns = [
     path('subject/create/', SubjectCreate.as_view(), name='create_subject'),
     path('subject/<int:pk>/update/', SubjectUpdate.as_view(), name='update_subject'),
     path('subject/<int:pk>/delete/', SubjectDelete.as_view(), name='delete_subject'),
+
+    #Search
+    path('search/', SearchResultsView.as_view(), name='search-results'),
+
+    # Course
+    path("course/", CourseView.as_view(), name="course"),
+    path('course/create/', CourseCreate.as_view(), name='create_course'),
+    path('course/<int:pk>/update/', CourseUpdate.as_view(), name='update_course'),
+    path('course/<int:pk>/delete/', CourseDelete.as_view(), name='delete_course'),
+
+
 
 ] 
