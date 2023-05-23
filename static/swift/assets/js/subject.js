@@ -1,12 +1,12 @@
 
 
 $(document).ready(function() {
-    $("#SubjectForm").validate({
+    $("#SubjectsForm").validate({
         rules: {},
         messages: {},
         submitHandler: function(form, event) {
             event.preventDefault();
-            var formData = $("#SubjectForm").serializeArray();
+            var formData = $("#SubjectsForm").serializeArray();
             var url = $("#form_url").val()
             $.ajax({
                 url: url,
@@ -16,8 +16,8 @@ $(document).ready(function() {
                 method: "POST",
                 data: formData,
                 beforeSend: function() {
-                    $("#Subject-submit").attr("disabled", "disabled");
-                    $("#Subject-submit").val("Saving...");
+                    $("#subject-submit").attr("disabled", "disabled");
+                    $("#subject-submit").val("Saving...");
                 },
                 success: function(response) {
                     if (response.status) {                        

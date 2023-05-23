@@ -3,7 +3,7 @@
     <div class="page-block">
         <input type="hidden" value="{% url 'appswift:subject' %}" id="load_subject">
         <div class="d-flex justify-content-between">
-            <h1 class="page-block-title">Curriculum</h1>
+            <h1 class="page-block-title">Subject</h1>
             <div>
                 <a class="add-subject" id="create_subject" data-fancybox="" data-src="#subject-popup"  data-url="{% url 'appswift:create_subject'%}">
                     <button>+</button>
@@ -38,7 +38,7 @@
         <div class="add-subject" id="subject-popup" style="display:none;">
             <div class="pop-body" id="subject-div">
                 <div class="formbg-inner">
-                    <form method="post" action="" class="SubjectForm" id="SubjectForm" name="SubjectForm">
+                    <form method="post" action="" class="SubjectsForm" id="SubjectsForm" name="SubjectsForm">
                         {% csrf_token %}
                         <h2 class="padding-bottom--15" id="popup_head">Add Subject</h2>
                         <div class="subject-form" id="subject-form-div">

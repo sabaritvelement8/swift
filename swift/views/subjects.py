@@ -42,40 +42,50 @@ class SubjectCreate(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         data = {}
         form = SubjectsForm()
+        print("hi")
     
         context = {'form': form, 'id': 0}
         data['status'] = True
         data['title'] = 'Add Subject'
+        print("kk")
+        print(data)
         data['template'] = render_to_string('swift/subject/subject_form.html', context, request=request)
         return JsonResponse(data)
 
     def post(self, request, *args, **kwargs):
+        print("ok")
         response = {}
         form = SubjectsForm(request.POST or None)
+        print("hlo")
         if form.is_valid():
             try:
                 # with transaction.atomic():
                     name = request.POST.get('name', None)
                     print(name)
                     print("hello")
-                    course = request.POST.get('course')
+                    course = request.POST.get('course',None)
+                    print(course)
                     # CHECK THE DATA EXISTS
-                    if not Subject.objects.filter(name=name,course=cours).exists():
-                        obj = Subject.objects.create(name=name,course=course)
+                    if not Subject.objects.filter(name=name).exists():
+                        obj = Subject.objects.create(name=name,course_id=course)
                         print(obj)
+                        print('tt')
 
                         # log entry
                         log_data = {}
-                        log_data['module_name'] = 'Subject'
+                        log_data['module_name'] = 'subject'
                         log_data['action_type'] = CREATE
                         log_data['log_message'] = 'Subject Created'
                         log_data['status'] = SUCCESS
                         log_data['model_object'] = obj
                         log_data['db_data'] = {'name':name}
+                        # log_data['db_data'] = {'course':course}
+                        
+
                         log_data['app_visibility'] = True
                         log_data['web_visibility'] = True
                         log_data['error_msg'] = ''
-                        log_data['fwd_link'] = '/Subject/'
+                        log_data['fwd_link'] = '/subject/'
                         LogUserActivity(request, log_data)
 
                         response['status'] = True
@@ -85,6 +95,7 @@ class SubjectCreate(LoginRequiredMixin, View):
                         response['message'] = 'Subject Already exists'
 
             except Exception as error:
+                print("hlo ",error)
                 log_data = {}
                 log_data['module_name'] = 'Subject'
                 log_data['action_type'] = CREATE
@@ -95,7 +106,7 @@ class SubjectCreate(LoginRequiredMixin, View):
                 log_data['app_visibility'] = False
                 log_data['web_visibility'] = False
                 log_data['error_msg'] = error
-                log_data['fwd_link'] = '/Subject/'
+                log_data['fwd_link'] = '/subject/'
                 LogUserActivity(request, log_data)
 
                 response['status'] = False
@@ -105,5 +116,5 @@ class SubjectCreate(LoginRequiredMixin, View):
             context = {'form': form}
             response['title'] = 'Edit Subject'
             response['valid_form'] = False
-            response['template'] = render_to_string('swift/Subject/Subject_form.html', context, request=request)
+            response['template'] = render_to_string('swift/subject/subject_form.html', context, request=request)
         return JsonResponse(response)

@@ -9,7 +9,7 @@ class SubjectsForm(forms.ModelForm):
         error_messages={ 'required': 'The name should not be empty' }
     )
     course = forms.ModelChoiceField(
-        label="course",
+        label="course",widget=forms.Select(attrs={'class':'form-control'}),
         queryset=Course.objects.all(),
         required=True
     )
