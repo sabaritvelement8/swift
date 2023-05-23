@@ -24,5 +24,7 @@ urlpatterns = [
     #subject
     path("subject/", SubjectsView.as_view(), name="subject"),
     path('subject/create/', SubjectCreate.as_view(), name='create_subject'),
+    path('subject/<int:pk>/update/', SubjectUpdate.as_view(), name='update_subject'),
+    path('subject/<int:pk>/delete/', SubjectDelete.as_view(), name='delete_subject'),
 
 ] 

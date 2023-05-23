@@ -7,11 +7,11 @@
     <td>{{subject.course}}</td>
     <td>{{subject.is_active}}</td>
     <td>
-        <a href="javascript:;" class="subject-edit" id="subject-edit" data-fancybox="" data-src="#subject-popup" data-url="{% url '#">
+        <a href="javascript:;" class="subject-edit" id="subject-edit" data-fancybox="" data-src="#subject-popup" data-url="{% url 'appswift:update_subject' subject.id %}">
             <img src="{% static '/swift/assets/images/edt_icon.svg' %}" alt="icon">
         </a>
 
-        <a href="javascript:;" onclick="#">
+        <a href="javascript:;" onclick="DeleteSubject({{subject.id}})">
             <img src="{% static '/swift/assets/images/dlt_icon.svg' %}" alt="icon">
         </a>
     </td>

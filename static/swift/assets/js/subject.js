@@ -128,7 +128,7 @@ function DeleteSubject(id) {
                         setTimeout(function() {
                             $("#flash_message_success").attr("style", "display:none;");
                         }, 3500);
-                        FilterSubject('')
+                        FilterSubjects('')
                     }
                 },
             });
