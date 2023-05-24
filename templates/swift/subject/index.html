@@ -7,14 +7,13 @@
 
 {% comment %} #search {% endcomment %}
 
-<form id="search-form">
-    <input type="text" id="search-input" placeholder="Search">
+<form id="form">
+    <input type="text" id="search-id" name='filter' placeholder="Search subject">
     <button type="submit">Search</button>
+    <button type="button" id="reset-button">Reset</button>  <!-- Add the reset button -->
+  
 </form>
 
-{% comment %} <div id="results-container"></div> {% endcomment %}
-
-    {% comment %} end {% endcomment %}
 
 
             <div>
@@ -25,7 +24,7 @@
         </div>
 
         <div>
-            <table id = 'results-container'>
+            <table id = 'search'>
                 <thead>
                     <tr>
                         <th>Sl.NO</th>

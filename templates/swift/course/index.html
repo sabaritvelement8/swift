@@ -4,6 +4,24 @@
         <input type="hidden" value="{% url 'appswift:course' %}" id="load_course">
         <div class="d-flex justify-content-between">
             <h1 class="page-block-title">Course</h1>
+
+            
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+            
+            <form id="form">
+                <input type="text" id="search-id" name='filter' placeholder="Search course">
+                <button type="submit">Search</button>
+                
+                <select id="multiselect" multiple="multiple" style="width: 100px;"></select>
+                <button type="button" id="reset-button">Reset</button>  <!-- Add the reset button -->
+            </form> 
+
+     
+
+
+            
+
+
             <div>
                 <a class="add-course" id="create_course" data-fancybox="" data-src="#course-popup"
                     data-url="{% url 'appswift:create_course'%}">

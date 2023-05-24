@@ -16,11 +16,28 @@ from django.shortcuts import get_object_or_404
 
 class SubjectsView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
+       
+      
+        # filter = request.GET.get('filter')
+        # if filter:
+        #     subjects = Subject.objects.filter(name__icontains = filter)
+        # else:    
+            
+        if 'filter' in request.GET:
+            filter = request.GET.get('filter')
+            subjects = Subject.objects.filter(name__icontains=filter).order_by('-id')
+      
+            # return JsonResponse(response)
+            
+        else:
+
+            subjects = Subject.objects.filter(is_active=True).order_by('-id')
         context, response = {}, {}
         page = int(request.GET.get('page', 1))
-        subjects = Subject.objects.filter(is_active=True).order_by('-id')
+
 
         paginator = Paginator(subjects, PAGINATION_PERPAGE)
+
         try:
             subjects = paginator.page(page)
         except PageNotAnInteger:
@@ -228,17 +245,16 @@ class SubjectDelete(LoginRequiredMixin, View):
 
 #filter
 
-class SearchResultsView(View):
-    def get(self, request):
-        # response= {}
-        search_query = request.GET.get('search_query')
-        if search_query:
-            results = Subject.objects.filter(name__icontains=search_query)
-            result_list = [{'id': result.id, 'name': result.name ,'course':result.course_id } for result in results]
-            return JsonResponse({'results': result_list})
-            # context =({'results': result_list})
-        # response['template'] = render_to_string('swift/subject/subject_form.html', context, request=request)
-        return JsonResponse({'results': []})
+# class SearchResultsView(View):
+#     def get(self, request):
+    
+#         search_query = request.GET.get('search_query')
+#         if search_query:
+#             results = Subject.objects.filter(name__icontains=search_query)
+#             result_list = [{'id': result.id, 'name': result.name ,'course':result.course_id,'status':result.is_active } for result in results]
+#             return JsonResponse({'results': result_list})
+            
+        # return JsonResponse({'results': []})
 
 
 

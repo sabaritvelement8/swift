@@ -29,7 +29,7 @@ urlpatterns = [
     path('subject/<int:pk>/delete/', SubjectDelete.as_view(), name='delete_subject'),
 
     #Search
-    path('search/', SearchResultsView.as_view(), name='search-results'),
+    # path('search/', SearchResultsView.as_view(), name='search-results'),
 
     # Course
     path("course/", CourseView.as_view(), name="course"),

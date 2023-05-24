@@ -15,10 +15,16 @@ from django.db import transaction
 
 class CourseView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
+        if 'filter' in request.GET:
+            filter = request.GET.get('filter')
+            courses = Course.objects.filter(name__icontains=filter).order_by('-id')
+      
+            # return JsonResponse(response)
+            
+        else:
+            courses = Course.objects.filter(is_active=True).order_by('-id')
         context, response = {}, {}
         page = int(request.GET.get('page', 1))
-        courses = Course.objects.filter(is_active=True).order_by('-id')
-
         paginator = Paginator(courses, PAGINATION_PERPAGE)
         try:
             courses = paginator.page(page)

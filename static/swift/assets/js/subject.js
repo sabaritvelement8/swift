@@ -57,11 +57,13 @@ function FilterSubjects(page) {
         page = $('#current_page').val()
     }
     var url = $('#load_subject').val()
+    var filter = $('#search-id').val()
     $.ajax({
         url: url,
         headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
         method: "GET",
-        data: { 'page': page },
+        data: { 'page': page ,
+              'filter':filter},
         beforeSend: function() {},
         success: function(response) {
             $('#subject-tbody').html(response.template)
@@ -70,6 +72,23 @@ function FilterSubjects(page) {
     });
 }
 
+// search
+$('#form').submit(function (e) {
+    e.preventDefault();
+    FilterSubjects();  
+
+
+    
+});
+
+
+
+
+//res
+$('#reset-button').click(function() {
+    $('#search-id').val('');  // Clear the search input
+    FilterSubjects();  
+});
 
 
 $(document).on('click', '#create_subject', function(event) {
@@ -143,84 +162,3 @@ function DeleteSubject(id) {
 
 
 
-// $(document).ready(function() {
-// $('#search-form').submit(function(event) {
-//     event.preventDefault();  // Prevent form submission
-//     var searchQuery = $('#search-input').val();
-//     $.ajax({
-//         url: '/search/',  // URL
-//         type: 'GET',
-//         data: { search_query: searchQuery },
-//         success: function(response) {
-//             console.log(response)
-          
-
-//             var results = response.results;
-//             var resultsContainer = $('#results-container');
-//             resultsContainer.empty();
-//             if (results.length > 0) {
-//                 var ul = $('<ul>');
-//                 for (var i = 0; i < results.length; i++) {
-//                     var li = $('<li>').text(results[i].name);
-//                     ul.append(li);
-//                 }
-//                 resultsContainer.append(ul);
-//             } else {
-//                 resultsContainer.text('No results found.');
-//             }
-//         }
-//     });
-// });
-// });
-
-$(document).ready(function() {
-    $('#search-form').submit(function(event) {
-        event.preventDefault();  // Prevent form submission
-        var searchQuery = $('#search-input').val();
-        $.ajax({
-            url: '/search/',  // URL
-            type: 'GET',
-            data: { search_query: searchQuery },
-            success: function(response) {
-                console.log(response);
-
-                var results = response.results;
-                var resultsContainer = $('#results-container');
-                resultsContainer.empty();
-                if (results.length > 0) {
-                    var table = $('<table>');
-                    var thead = $('<thead>');
-                    var tbody = $('<tbody>');
-
-                    // Create table header
-                    var headerRow = $('<tr>');
-                    headerRow.append($('<th>').text('id'));
-                    headerRow.append($('<th>').text('Name'));
-                    headerRow.append($('<th>').text('Course'));
-                    thead.append(headerRow);
-
-                    // Create table rows for each result
-                    for (var i = 0; i < results.length; i++) {
-                        var result = results[i];
-                        var row = $('<tr>');
-                        row.append($('<td>').text(result.id));
-                        row.append($('<td>').text(result.name));
-                       
-                        row.append($('<td>').text(result.course));
-                       
-
-                        
-               
-                        tbody.append(row);
-                    }
-
-                    table.append(thead);
-                    table.append(tbody);
-                    resultsContainer.append(table);
-                } else {
-                    resultsContainer.text('No results found.');
-                }
-            }
-        });
-    });
-});

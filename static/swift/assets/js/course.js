@@ -53,11 +53,12 @@ function FilterCourse(page) {
         page = $('#current_page').val()
     }
     var url = $('#load_course').val()
+    var filter = $('#search-id').val()
     $.ajax({
         url: url,
         headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
         method: "GET",
-        data: { 'page': page },
+        data: { 'page': page,'filter':filter},
         beforeSend: function () { },
         success: function (response) {
             $('#course-tbody').html(response.template)
@@ -65,6 +66,19 @@ function FilterCourse(page) {
         },
     });
 }
+//search
+$('#form').submit(function (e) {
+    e.preventDefault();
+
+    FilterCourse('');
+});
+
+// re
+$('#reset-button').click (function() {
+    $('#search-id').val('');
+    
+    FilterCourse()
+});
 
 $(document).on('click', '#create_course', function (event) {
     event.preventDefault();
@@ -132,3 +146,62 @@ function DeleteCourse(id) {
         }
     });
 }
+
+
+// $(document).ready(function () {
+//     $('#search-input').on('input', function () {
+//         var query = $(this).val();
+//         $.ajax({
+//             url: '/search/',  // Replace with your URL endpoint
+//             data: {'query': query},
+//             success: function (response) {
+//                 var results = response.items;
+//                 var select = $('#search-results');
+//                 select.empty();  // Clear previous results
+//                 for (var i = 0; i < results.length; i++) {
+//                     var option = $('<option>').val(results[i].id).text(results[i].name);
+//                     select.append(option);
+//                 }
+//             }
+//         });
+//     });
+// });
+
+// $(document).ready(function() {
+//     $('#multiselect').select2(); // Apply Select2 to the multiselect dropdown
+    
+//     $('#form').on('submit', function(event) {
+//       event.preventDefault(); // Prevent the form from submitting normally
+      
+//       var query = $('#search-id').val(); // Get the search query
+      
+//       $.ajax({
+//         url: '/course/', // URL to your Django view
+//         data: {
+//           filter: query // Pass the search query as a parameter
+//         },
+//         dataType: 'json',
+//         success: function(data) {
+//           var dropdown = $('#multiselect');
+//           dropdown.empty(); // Clear the existing options
+          
+//           $.each(data, function(index, item) {
+//             dropdown.append($('<option>', {
+//               value: item.id,
+//               text: item.name
+//             }));
+//           });
+          
+//           dropdown.trigger('change'); // Notify Select2 about the updated options
+//         }
+//       });
+//     });
+//   });
+
+
+
+
+// src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+// src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+
+
