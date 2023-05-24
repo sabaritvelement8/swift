@@ -230,11 +230,14 @@ class SubjectDelete(LoginRequiredMixin, View):
 
 class SearchResultsView(View):
     def get(self, request):
+        # response= {}
         search_query = request.GET.get('search_query')
         if search_query:
             results = Subject.objects.filter(name__icontains=search_query)
             result_list = [{'id': result.id, 'name': result.name ,'course':result.course_id } for result in results]
             return JsonResponse({'results': result_list})
+            # context =({'results': result_list})
+        # response['template'] = render_to_string('swift/subject/subject_form.html', context, request=request)
         return JsonResponse({'results': []})
 
 

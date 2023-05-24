@@ -207,6 +207,10 @@ $(document).ready(function() {
                         row.append($('<td>').text(result.name));
                        
                         row.append($('<td>').text(result.course));
+                       
+
+                        
+               
                         tbody.append(row);
                     }
 

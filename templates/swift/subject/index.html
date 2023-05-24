@@ -12,7 +12,7 @@
     <button type="submit">Search</button>
 </form>
 
-<div id="results-container"></div>
+{% comment %} <div id="results-container"></div> {% endcomment %}
 
     {% comment %} end {% endcomment %}
 
@@ -25,7 +25,7 @@
         </div>
 
         <div>
-            <table>
+            <table id = 'results-container'>
                 <thead>
                     <tr>
                         <th>Sl.NO</th>
