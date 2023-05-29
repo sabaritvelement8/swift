@@ -8,28 +8,30 @@
             
             <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
             
-            <form id="form">
-                
-                <input type="text" id="search-id" name='filter' placeholder="Search course">
-                <button type="submit">Search</button>
+            
                 
                 
-                <button type="button" id="reset-button">Reset</button>  <!-- Add the reset button -->
               
-            </form> 
+          
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <select id="curriculum-select" name="curriculum" class="form-control">
                     <option value="" selected>-curriculum-</option>
                     {% for curriculum in curriculums %}
                     <option value="{{ curriculum.id }}">{{ curriculum.name }}</option>
                     {% endfor %}
                 </select>
-               
+            
             </div>
+            <form id="form">
+            <input type="text" id="search-id" name='filter' placeholder="Search course">
+               
+                
+                
+                <button type="button" id="reset-button">Reset</button>  <!-- Add the reset button -->
             {% comment %} <button type="button" id="reset-button">Reset</button>  <!-- Add the reset button --> {% endcomment %}
    
-      
+        </form> 
 
 
             <div>

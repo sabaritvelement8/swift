@@ -13,71 +13,34 @@ from django.db import transaction
 
 
 
-# class CourseView(LoginRequiredMixin, View):
-#     def get(self, request, *args, **kwargs):
-       
-        
-#         filterss = Curriculum.objects.all()
-#         if 'curriculum' in request.GET:
-#             filters = request.GET.get('curriculum')
-#             print(filters)
-#             courses = Course.objects.filter(name__icontains=filters).order_by('-id')
-#             print(courses)
 
-           
-
-#         if 'filter' in request.GET:
-#             filter = request.GET.get('filter')
-#             courses = Course.objects.filter(name__icontains=filter).order_by('-id')
-      
-#             return JsonResponse(response)
-      
-            
-#         else:
-#             courses = Course.objects.filter(is_active=True).order_by('-id')
-#         context, response = {}, {}
-#         page = int(request.GET.get('page', 1))
-#         paginator = Paginator(courses, PAGINATION_PERPAGE)
-#         try:
-#             courses = paginator.page(page)
-#         except PageNotAnInteger:
-#             courses = paginator.page(1)
-#         except EmptyPage:
-#             courses = paginator.page(paginator.num_pages)
-
-#         context['courses'], context['current_page'],context['curriculums']  = courses, page ,filterss
-         
-#         if is_ajax(request=request):
-#             response['status'] = True
-#             response['pagination'] = render_to_string("swift/course/pagination.html",context=context,request=request)
-#             response['template'] = render_to_string('swift/course/course_list.html', context, request=request)
-#             return JsonResponse(response)
-#         context['form']  = CourseForm()
-#         return renderfile(request, 'course', 'index', context)
     
 class CourseView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        filterss = Curriculum.objects.all()
-        courses = Course.objects.filter(is_active=True).order_by('-id')
+       
+    
         context = {
             'courses': None,
             'current_page': None,
-            'curriculums': filterss,
-            'form': CourseForm()
+            'curriculums': Curriculum.objects.all(),
+           
         }
         response = {}
+        cond = {'is_active':True}
         if 'filter' in request.GET:
             filter_value = request.GET.get('filter')
             if filter_value:
-                     courses = courses.filter(name__icontains=filter_value).order_by('-id')
+                cond['name__icontains']=filter_value
+                     
 
         if 'curriculum' in request.GET:
             filters = request.GET.get('curriculum')
             if filters:
-                     courses = courses.filter(curriculum_id=filters).order_by('-id')
+                 cond['curriculum_id']=filters
+                     
 
-
-        
+        courses = Course.objects.select_related('curriculum').filter(**cond).order_by('-id')
+    
 
         page = request.GET.get('page')
         paginator = Paginator(courses, PAGINATION_PERPAGE)

@@ -3,7 +3,7 @@ from django.views.generic import  View
 from swift.forms.subjects import SubjectsForm
 from django.core.paginator import *
 from swift.constantvariables import PAGINATION_PERPAGE
-from swift.models import Subject
+from swift.models import Subject,Course
 from swift.helper import renderfile,is_ajax,LogUserActivity
 from django.http import JsonResponse
 from django.template.loader import render_to_string
@@ -18,21 +18,31 @@ class SubjectsView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
        
       
-        # filter = request.GET.get('filter')
-        # if filter:
-        #     subjects = Subject.objects.filter(name__icontains = filter)
-        # else:    
+        context = {
+            'subjects': None,
+            'current_page': None,
+            'course':Course.objects.all(),
+           
+        }
+        response = {}
+        cond = {'is_active':True}
             
         if 'filter' in request.GET:
-            filter = request.GET.get('filter')
-            subjects = Subject.objects.filter(name__icontains=filter).order_by('-id')
-      
+            filter_value = request.GET.get('filter')
+            if filter_value:
+                cond['name__icontains']=filter_value
+            
+        if 'course' in request.GET:
+            filters = request.GET.get('course')
+            if filters:
+                    cond['course_id']=filters
+                        
+
+        subjects = Subject.objects.select_related('course').filter(**cond).order_by('-id')
             # return JsonResponse(response)
             
-        else:
-
-            subjects = Subject.objects.filter(is_active=True).order_by('-id')
-        context, response = {}, {}
+        
+        
         page = int(request.GET.get('page', 1))
 
 
@@ -52,8 +62,8 @@ class SubjectsView(LoginRequiredMixin, View):
             response['template'] = render_to_string('swift/subject/subject_list.html', context, request=request)
             return JsonResponse(response)
         # context['form']  = SubjectsForm()
-        return renderfile(request, 'subject', 'index', context)
-        # return render(request,'subject/index.html',context)
+        # return renderfile(request, 'subject', 'index', context)
+        return render(request,'swift/subject/index.html',context)
 
 
 
@@ -243,28 +253,3 @@ class SubjectDelete(LoginRequiredMixin, View):
 
 
 
-#filter
-
-# class SearchResultsView(View):
-#     def get(self, request):
-    
-#         search_query = request.GET.get('search_query')
-#         if search_query:
-#             results = Subject.objects.filter(name__icontains=search_query)
-#             result_list = [{'id': result.id, 'name': result.name ,'course':result.course_id,'status':result.is_active } for result in results]
-#             return JsonResponse({'results': result_list})
-            
-        # return JsonResponse({'results': []})
-
-
-
-
-
-# class ChartData(ListView):
-#     serializer_class = DataSerializer
-
-#     def get_queryset(self, *args, **kwargs):
-#         filter_category = self.request.GET.get("filter_category")
-#         queryset = Subject.objects.filter(airline_id=filter_category)
-#         queryset_filtered = queryset.filter()
-#         return queryset_filtered

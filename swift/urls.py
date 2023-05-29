@@ -3,6 +3,7 @@ from swift.views.account import *
 from swift.views.curriculum import *
 from swift.views.subjects import *
 from swift.views.course import *
+from swift.views.topic import *
 
 app_name = "appswift"
 # views
@@ -36,6 +37,15 @@ urlpatterns = [
     path('course/create/', CourseCreate.as_view(), name='create_course'),
     path('course/<int:pk>/update/', CourseUpdate.as_view(), name='update_course'),
     path('course/<int:pk>/delete/', CourseDelete.as_view(), name='delete_course'),
+
+
+     # Topic
+    path("topic/", TopicView.as_view(), name="topic"),
+    path('topic/create/', TopicCreate.as_view(), name='create_topic'),
+    # path('course/<int:pk>/update/', CourseUpdate.as_view(), name='update_course'),
+    # path('course/<int:pk>/delete/', CourseDelete.as_view(), name='delete_course'),
+
+
 
 
 

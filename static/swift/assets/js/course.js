@@ -67,17 +67,23 @@ function FilterCourse(page) {
         },
     });
 }
+$(document).ready(function () {
 //search
-$('#form').submit(function (e) {
-    e.preventDefault();
+// $('#form').submit(function (e) {
+//     e.preventDefault();
 
-    FilterCourse('');
+//     FilterCourse('');
+// });
+
+$('#form').on('keyup', function () {
+    var filter = $(this).val();
+    FilterCourse(filter);
 });
 
 
 // dropdown
 $('#curriculum-select').change(function () {
-    var curriculum = $(this).val(); 
+    // var curriculum = $(this).val(); 
     FilterCourse('');
 });
 
@@ -89,6 +95,8 @@ $('#reset-button').click (function() {
     
     FilterCourse()
 });
+});
+
 
 $(document).on('click', '#create_course', function (event) {
     event.preventDefault();

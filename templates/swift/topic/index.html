@@ -1,24 +1,24 @@
 {% extends "swift/layout/user_base.html" %} {% load static %} {% block body_block %}
 <div class="content-inner full-screen">
     <div class="page-block">
-        <input type="hidden" value="{% url 'appswift:subject' %}" id="load_subject">
+        <input type="hidden" value="{% url 'appswift:topic' %}" id="load_topic">
         <div class="d-flex justify-content-between">
-            <h1 class="page-block-title">Subject</h1>
+            <h1 class="page-block-title">topic</h1>
 
 {% comment %} #search {% endcomment %}
 
 <div class="col-md-3">
-    <select id="course-select" name="curriculum" class="form-control">
-        <option value="" selected>-course-</option>
-        {% for course in course %}
-        <option value="{{ course.id }}">{{ course.name }}</option>
+    <select id="topic-select" name="topic" class="form-control">
+        <option value="" selected>-topic-</option>
+        {% for subject in subject %}
+        <option value="{{ subject.id }}">{{ subject.name }}</option>
         {% endfor %}
     </select>
 
 </div>
 
 <form id="form">
-    <input type="text" id="search-id" name='filter' placeholder="Search subject">
+    <input type="text" id="search-id" name='filter' placeholder="Search topic">
   
     <button type="button" id="reset-button">Reset</button>  <!-- Add the reset button -->
   
@@ -27,7 +27,7 @@
 
 
             <div>
-                <a class="add-subject" id="create_subject" data-fancybox="" data-src="#subject-popup"  data-url="{% url 'appswift:create_topic'%}">
+                <a class="add-topic" id="create_topic" data-fancybox="" data-src="#topic-popup"  data-url="{% url 'appswift:create_topic'%}">
                     <button>+</button>
                 </a>
             </div>
@@ -40,41 +40,42 @@
                         <th>Sl.NO</th>
                         <th>Name</th>
                         <th>Course</th>
+                        <th>Subject</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
 
-                <tbody id="subject-tbody">
-                    {% include 'swift/subject/subject_list.html' %}
+                <tbody topic-tbody">
+                    {% include 'swift/topic/topic_list.html' %}
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="pagination-outer align-items-center justify-content-between d-flex" id="subject-pagination">
-        {% include 'swift/subject/pagination.html' %}
+    <div class="pagination-outer align-items-center justify-content-between d-flex" id="topic-pagination">
+        {% include 'swift/topic/pagination.html' %}
     </div>
 
     <div>
-        <!-- Subject Add form starts-->
-        <div class="add-subject" id="subject-popup" style="display:none;">
-            <div class="pop-body" id="subject-div">
+        <!-- topic Add form starts-->
+        <div class="add-topic" id="topic-popup" style="display:none;">
+            <div class="pop-body" id="topic-div">
                 <div class="formbg-inner">
-                    <form method="post" action="" class="SubjectsForm" id="SubjectsForm" name="SubjectsForm">
+                    <form method="post" action="" class="TopicForm" id="SubjectsForm" name="SubjectsForm">
                         {% csrf_token %}
                         <h2 class="padding-bottom--15" id="popup_head">Add Subject</h2>
-                        <div class="subject-form" id="subject-form-div">
+                        <div class="topic-form" id="topic-form-div">
                             
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <!-- subject Add form ends -->
+        <!-- subjetopicct Add form ends -->
     </div>
 </div>
 </div>
 {% endblock body_block %} 
 {% block page_script %}
-<script src="{% static '/swift/assets/js/subject.js' %}?v={% now 'd_m_yH:i:s'%}"></script>
+<script src="{% static '/swift/assets/js/topic.js' %}?v={% now 'd_m_yH:i:s'%}"></script>
 {% endblock page_script %}
