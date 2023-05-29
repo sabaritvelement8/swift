@@ -54,11 +54,12 @@ function FilterCourse(page) {
     }
     var url = $('#load_course').val()
     var filter = $('#search-id').val()
+    var curriculum = $('#curriculum-select').val()
     $.ajax({
         url: url,
         headers: { "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val() },
         method: "GET",
-        data: { 'page': page,'filter':filter},
+        data: { 'page': page,'filter':filter,'curriculum':curriculum},
         beforeSend: function () { },
         success: function (response) {
             $('#course-tbody').html(response.template)
@@ -73,9 +74,18 @@ $('#form').submit(function (e) {
     FilterCourse('');
 });
 
-// re
+
+// dropdown
+$('#curriculum-select').change(function () {
+    var curriculum = $(this).val(); 
+    FilterCourse('');
+});
+
+
+// reset
 $('#reset-button').click (function() {
     $('#search-id').val('');
+    $('#curriculum-select').val('');
     
     FilterCourse()
 });
